@@ -2,17 +2,21 @@ let titleUpdated = false;
 function calculateNotification() {
     let notificationClass = document.getElementsByClassName("js-unread-count");
     let totalNotifications = 0;
-    for (notificationElement of notificationClass) {
-        totalNotifications += parseInt(notificationElement.innerHTML);
-    }
+    for (notificationElement of notificationClass)
+        if (notificationElement.style.display != "none")
+            totalNotifications += parseInt(notificationElement.innerHTML);
     return totalNotifications;
 }
 
 function observeNotification(notificationElement) {
     let mutationObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            writeNotificationOnTitle();
-        });
+        for (mutation of mutations) {
+            if ((mutation.type == "attributes" && mutation.attributeName == "style" && mutation.target.style.display == "none") || mutation.type == "characterData") {
+                console.log("RELOADD!", mutation, notificationElement)
+                writeNotificationOnTitle();
+                break;
+            }
+        }
     });
     mutationObserver.observe(notificationElement, {
         attributes: true,
@@ -20,7 +24,8 @@ function observeNotification(notificationElement) {
         childList: true,
         subtree: true,
         attributeOldValue: true,
-        characterDataOldValue: true
+        characterDataOldValue: true,
+        attributeFilter: ['style'],
     });
 }
 
