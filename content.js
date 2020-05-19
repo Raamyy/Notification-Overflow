@@ -1,3 +1,4 @@
+
 let titleUpdated = false;
 function calculateNotification() {
     let notificationClass = document.getElementsByClassName("js-unread-count");

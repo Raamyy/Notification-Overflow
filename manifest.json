@@ -1,5 +1,5 @@
 {
-    "name": "Stackoverflow notifier",
+    "name": "Notification Overflow",
     "version": "1.0",
     "manifest_version": 2,
     "content_scripts": [
@@ -11,5 +11,10 @@
                 "content.js"
             ]
         }
-    ]
+    ],
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    }
 }
